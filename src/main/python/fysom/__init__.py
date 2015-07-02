@@ -192,7 +192,7 @@ class Fysom(object):
              >> Prepares the event to state transitions map.
         '''
         init = cfg['initial'] if 'initial' in cfg else None
-        if self._is_base_string(init):
+        if self._is_base_string_or_int(init):
             init = {'state': init}
 
         self._final = cfg['final'] if 'final' in cfg else None
@@ -207,7 +207,7 @@ class Fysom(object):
                 Adds the event into the machine map.
             '''
             if 'src' in e:
-                src = [e['src']] if self._is_base_string(
+                src = [e['src']] if self._is_base_string_or_int(
                     e['src']) else e['src']
             else:
                 src = [WILDCARD]
@@ -357,14 +357,14 @@ class Fysom(object):
         if hasattr(self, fnname):
             return getattr(self, fnname)(e)
 
-    def _is_base_string(self, object):  # pragma: no cover
+    def _is_base_string_or_int(self, object):  # pragma: no cover
         '''
             Returns if the object is an instance of basestring.
         '''
         try:
             return isinstance(object, basestring)
         except NameError:
-            return isinstance(object, str)
+            return isinstance(object, str) or isinstance(object, int)
 
     def trigger(self, event, *args, **kwargs):
         '''
