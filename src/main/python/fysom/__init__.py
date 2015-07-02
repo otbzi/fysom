@@ -362,9 +362,9 @@ class Fysom(object):
             Returns if the object is an instance of basestring.
         '''
         try:
-            return isinstance(object, basestring)
+            return isinstance(object, basestring) or isinstance(object, int)
         except NameError:
-            return isinstance(object, str) or isinstance(object, int)
+            return isinstance(object, str)
 
     def trigger(self, event, *args, **kwargs):
         '''
